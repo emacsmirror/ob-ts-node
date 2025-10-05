@@ -1,6 +1,6 @@
 #+TITLE: ob-ts-node
 #+OPTIONS: toc:nil num:nil
-
+[[https://melpa.org/#/ob-ts-node][file:https://melpa.org/packages/ob-ts-node-badge.svg]]
 * Org Babel support for Typescript via =ts-node=
 This package adds [[https://orgmode.org/worg/org-contrib/babel/][Org-Babel]] support support for evaluating =typescript= (and =ts= alias) code blocks using using [[https://github.com/TypeStrong/ts-node][ts-node]].
 Unlike [[https://github.com/lurdan/ob-typescript][ob-typescript]], ob-ts-node works seamlessly with Node.js CommonJS-style imports.
@@ -43,8 +43,8 @@ The project is more or less in beta. But still, one can benefit from using it.
 *** Using [[https://github.com/jwiegley/use-package][use-package]] and [[https://github.com/quelpa/quelpa][quelpa]] packages (recommended):
 #+BEGIN_SRC elisp
   (use-package ob-ts-node
+    :ensure t
     :after org
-    :quelpa (ob-ts-node :repo "tmythicator/ob-ts-node" :fetcher github)
     :config
     (ob-ts-node-setup)
     (add-to-list 'org-babel-load-languages '(ts-node . t))
@@ -58,7 +58,11 @@ The project is more or less in beta. But still, one can benefit from using it.
 #+BEGIN_SRC elisp
   (add-to-list 'load-path "/path/to/ob-ts-node.el")
   (require 'ob-ts-node)
-  (ob-ts-node-full-babel-setup)
+  (ob-ts-node-setup)
+  (add-to-list 'org-babel-load-languages '(ts-node . t))
+  (org-babel-do-load-languages 'org-babel-load-languages
+                               org-babel-load-languages)
+  (setq ob-ts-node-tsconfig "~/.config/ts-node/tsconfig.json")
 #+END_SRC
 
 *** Node.js dependencies:
