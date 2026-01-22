@@ -1,0 +1,49 @@
+#+TITLE: ob-ts-node Extended Tests
+
+* Typescript Execution
+#+begin_src typescript
+const a : number = 443;
+console.log("hello ts"+a);
+#+end_src
+#+RESULTS:
+: hello ts443
+
+* TypeScript Alias
+#+begin_src ts
+let x = Math.ceil(46 / 7);
+
+console.log(x);
+#+end_src
+#+RESULTS:
+: 7
+
+* CommonJS Support
+#+begin_src ts
+const https = require("https");
+console.log("works");
+#+end_src
+#+RESULTS:
+: works
+
+* CLI Override
+#+BEGIN_SRC typescript :cli-override "-e \"console.log('override works')\""
+console.log(43)
+#+END_SRC
+#+RESULTS:
+: override works
+
+* CLI Arguments
+#+begin_src typescript :cli-args "--skip-project --transpile-only --compiler-options '{\"module\":\"commonjs\"}'"
+let a = 444;
+
+console.log(a);
+#+end_src
+#+RESULTS:
+: 444
+
+* Custom Command (tsx)
+#+BEGIN_SRC typescript  :cli-cmd "npx tsx"
+console.log("Using npx tsx");
+#+END_SRC
+#+RESULTS:
+: Using npx tsx

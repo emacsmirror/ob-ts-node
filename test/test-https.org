@@ -1,0 +1,50 @@
+#+TITLE: ob-ts-node HTTPS Tests
+
+* NASA APOD API
+#+BEGIN_SRC typescript :cli-args "--skip-project --compiler-options '{\"module\":\"commonjs\", \"noImplicitAny\": false}'"
+const https = require('https');
+
+https.get('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY', (resp) => {
+  let data = '';
+
+  // A chunk of data has been recieved.
+  resp.on('data', (chunk) => {
+    data += chunk;
+  });
+
+
+  resp.on('end', () => {
+    console.log(JSON.parse(data).title);
+  });
+
+}).on("error", (err) => {
+  console.log("Error: " + err.message);
+});
+#+END_SRC
+
+* Restful Objects API
+#+BEGIN_SRC typescript :cli-args "--skip-project --compiler-options '{\"module\":\"commonjs\", \"noImplicitAny\": false}'"
+const https = require("https");
+
+https.get("https://api.restful-api.dev/objects", (resp) => {
+  let data = "";
+
+  // Collect data chunks
+  resp.on("data", (chunk) => {
+    data += chunk;
+  });
+
+  // Parse when finished
+  resp.on("end", () => {
+    try {
+      const json = JSON.parse(data);
+      console.log("Received", json.length, "objects");
+      console.log("First object:", json[0]);
+    } catch (err) {
+      console.error("Failed to parse JSON:", err);
+    }
+  });
+}).on("error", (err) => {
+  console.error("Error: " + err.message);
+});
+#+END_SRC
