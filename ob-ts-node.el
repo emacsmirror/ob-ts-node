@@ -43,6 +43,7 @@
 ;; - Execution of `#+begin_src typescript` and `#+begin_src ts` blocks
 ;; - Automatic tangling to `.ts` files
 ;;
+;;
 
 ;;; Code:
 (require 'ob)
@@ -56,14 +57,11 @@
 (defcustom ob-ts-node-tsconfig nil
   "Path to a tsconfig.json used by ob-ts-node by default.
 Highly recommended to set for stable, reproducible behavior (see ts-node docs)."
-  :type '(choice (const :tag "Disabled" nil)
-                 (string :tag "Path"))
+  :type '(choice (const :tag "Disabled" nil) (string :tag "Path"))
   :group 'org-babel)
 
 (defvar org-babel-default-header-args:typescript
-  '((:cli-args    . nil)
-    (:cli-override . nil)
-    (:cli-cmd . nil))
+  '((:cli-args . nil) (:cli-override . nil) (:cli-cmd . nil))
   "Default header arguments for TypeScript Babel blocks.
 
 Recognized keys:
@@ -78,18 +76,29 @@ Recognized keys:
   "Execute BODY as TypeScript code using ts-node with PARAMS."
   (let* ((src (org-babel-temp-file "ts-" ".ts"))
          (args (alist-get :cli-args params))
-         (ovr (alist-get :cli-override params))
-         (cmd-base (if ob-ts-node-tsconfig
-                       (concat ob-ts-node-command " --project " ob-ts-node-tsconfig)
-                     ob-ts-node-command))
+         (override (alist-get :cli-override params))
+         (skip-project-p
+          (and args (string-match-p "--skip-project" args)))
+         (use-project-p
+          (and ob-ts-node-tsconfig (not skip-project-p)))
+         (cmd-base
+          (if use-project-p
+              (format "%s --project %s"
+                      ob-ts-node-command
+                      ob-ts-node-tsconfig)
+            ob-ts-node-command))
          (cmd (or (alist-get :cli-cmd params) cmd-base))
          (file (org-babel-process-file-name src)))
-    (with-temp-file src (insert body))
+    (with-temp-file src
+      (insert body))
     (let ((command
            (cond
-            (ovr  (format "%s %s" cmd ovr))
-            (args (format "%s %s %s" cmd args file))
-            (t    (format "%s %s"    cmd file)))))
+            (override
+             (format "%s %s" cmd override))
+            (args
+             (format "%s %s %s" cmd args file))
+            (t
+             (format "%s %s" cmd file)))))
       (org-babel-eval command ""))))
 
 ;;;###autoload
@@ -111,10 +120,14 @@ Argument PARAMS is an alist of header arguments controlling execution."
   "Register TypeScript support for Org Babel and src editing."
   (add-to-list 'org-babel-tangle-lang-exts '("typescript" . "ts"))
   (add-to-list 'org-babel-tangle-lang-exts '("ts" . "ts"))
-  (let ((mode (cond
-               ((fboundp 'typescript-ts-mode) 'typescript-ts)
-               ((fboundp 'typescript-mode)    'typescript)
-               (t 'js))))
+  (let ((mode
+         (cond
+          ((fboundp 'typescript-ts-mode)
+           'typescript-ts)
+          ((fboundp 'typescript-mode)
+           'typescript)
+          (t
+           'js))))
     (dolist (lang '("typescript" "ts"))
       (add-to-list 'org-src-lang-modes (cons lang mode)))))
 

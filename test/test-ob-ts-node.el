@@ -23,7 +23,7 @@ Strategy can be 'idempotency (check #+RESULTS match) or 'non-empty."
           (message "Block Result: %s" result)
           (if (eq strategy 'non-empty)
               (should (and result (not (string-empty-p (format "%s" result)))))
-            
+
             ;; Idempotency check
             (when result-loc
               (let ((exp-str (if expected (format "%s" expected) ""))

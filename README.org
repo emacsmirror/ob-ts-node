@@ -90,9 +90,15 @@ Note: Set strict to =false= to evade type-errors for easier scenarios
 - *:cli-args*:
   Extra flags passed to ts-node:
   #+BEGIN_EXAMPLE
-  ,#+BEGIN_SRC typescript  :cli-args "--skip-project "
+  ,#+BEGIN_SRC typescript  :cli-args "--skip-project"
   // your code goes here
   ,#+END_SRC
+  #+END_EXAMPLE
+
+  *Note:* If =ob-ts-node-tsconfig= is set, using =--skip-project= will automatically suppress the injection of that config file.
+  *Warning:* When skipping the project file, you may need to provide compiler options manually if your environment defaults don't match the code style (e.g. CommonJS vs ESM):
+  #+BEGIN_EXAMPLE
+  :cli-args "--skip-project --compiler-options '{\"module\":\"commonjs\"}'"
   #+END_EXAMPLE
 
 - *:cli-override*:
@@ -118,7 +124,7 @@ Note: Set strict to =false= to evade type-errors for easier scenarios
   #+END_EXAMPLE
 ** Use other execution engines (tsx / bun / deno)
 You can swap the runner via =:cli-cmd= and keep the same Org-Babel flow.
-- **tsx** (zero-config TS/ESM runner)
+- *tsx* (zero-config TS/ESM runner)
   #+BEGIN_EXAMPLE
   ,#+BEGIN_SRC typescript :cli-cmd "npx tsx"
   console.log("Using npx tsx");
@@ -127,7 +133,7 @@ You can swap the runner via =:cli-cmd= and keep the same Org-Babel flow.
   : Using npx tsx
   #+END_EXAMPLE
 
-- **bun** (fast JS/TS runtime)
+- *bun* (fast JS/TS runtime)
   #+BEGIN_EXAMPLE
   ,#+BEGIN_SRC typescript :cli-cmd "npx bun run"
   console.log("Hello from bun");
@@ -136,7 +142,7 @@ You can swap the runner via =:cli-cmd= and keep the same Org-Babel flow.
   : Hello from bun
   #+END_EXAMPLE
 
-- **deno** (secure runtime; add permissions if needed)
+- *deno* (secure runtime; add permissions if needed)
   #+BEGIN_EXAMPLE
   ,#+BEGIN_SRC typescript :cli-cmd "npx deno run"
   console.log("Deno here");
