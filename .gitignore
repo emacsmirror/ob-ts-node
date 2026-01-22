@@ -1,2 +1,5 @@
 *.elc
 /ob-ts-node-autoloads.el
+node_modules/
+.direnv/
+tmp/

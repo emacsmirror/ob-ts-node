@@ -1,0 +1,17 @@
+{
+  "name": "ob-ts-node-dev",
+  "version": "1.0.0",
+  "description": "Dev dependencies for ob-ts-node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.4.0"
+  }
+}
