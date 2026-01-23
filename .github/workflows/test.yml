@@ -25,6 +25,9 @@ jobs:
         with:
           nix_path: nixpkgs=channel:nixos-unstable
 
+      - name: Install dependencies
+        run: nix develop --command bun install
+
       - name: Run tests
         run: nix develop --command make test
 
