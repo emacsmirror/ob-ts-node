@@ -1,3 +1,4 @@
+;;; test-ob-ts-node.el --- Integration tests for ob-ts-node -*- lexical-binding: t; -*-
 (require 'ert)
 (require 'ob-ts-node)
 

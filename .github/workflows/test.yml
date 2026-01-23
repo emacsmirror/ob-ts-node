@@ -21,21 +21,21 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: purcell/setup-emacs@master
+      - uses: cachix/install-nix-action@v31
         with:
-          version: ${{ matrix.emacs_version }}
+          nix_path: nixpkgs=channel:nixos-unstable
 
       - name: Run tests
-        run: make test
+        run: nix develop --command make test
 
       - name: Byte-compile
-        run: make compile
+        run: nix develop --command make compile
 
       - name: Check Formatting
-        run: make format-check
+        run: nix develop --command make format-check
 
       - name: Checkdoc
-        run: make checkdoc
+        run: nix develop --command make checkdoc
 
       - name: Lint
-        run: make lint
+        run: nix develop --command make lint
