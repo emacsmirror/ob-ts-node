@@ -1,6 +1,8 @@
 #+TITLE: ob-ts-node
 #+OPTIONS: toc:nil num:nil
 [[https://melpa.org/#/ob-ts-node][file:https://melpa.org/packages/ob-ts-node-badge.svg]]
+[[https://github.com/tmythicator/ob-ts-node/actions/workflows/test.yml][file:https://github.com/tmythicator/ob-ts-node/actions/workflows/test.yml/badge.svg]]
+[[https://nixos.org][file:https://img.shields.io/static/v1?label=Built+with&message=Nix+Flake&color=4e66af&logo=nixos&logoColor=fff]]
 * Org Babel support for Typescript via =ts-node=
 This package adds [[https://orgmode.org/worg/org-contrib/babel/][Org-Babel]] support support for evaluating =typescript= (and =ts= alias) code blocks using using [[https://github.com/TypeStrong/ts-node][ts-node]].
 Unlike [[https://github.com/lurdan/ob-typescript][ob-typescript]], ob-ts-node works seamlessly with Node.js CommonJS-style imports.

@@ -4,7 +4,7 @@
 
 ;; Author: Alexandr Timchenko
 ;; URL: https://github.com/tmythicator/ob-ts-node
-;; Version: 0.3
+;; Version: 0.4
 ;; Keywords: languages, tools
 ;; Package-Requires: ((emacs "25.1") (org "8.0"))
 
